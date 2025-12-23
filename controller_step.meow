@@ -396,11 +396,10 @@ if (player != noone) {
     global.HOOK_UNLOCKED_ = true
   }
 
-  if (!global.archipelago.infiniteGrappleEnabled) {
-    player.endless_hook = false
-  } else {
-    player.endless_hook = true
+  if (global.archipelago.infiniteGrappleRandomized) {
+    player.endless_hook = global.archipelago.infiniteGrappleEnabled
   }
+
 
   -- seems like the "default" player states when we would want to do deathlink I think
   if (player.state == 6 or player.state == 0) {
@@ -578,6 +577,7 @@ match pollStatus {
     global.archipelago.ending = global.archipelago.apclient_json_number_at(0, "ending")
     global.archipelago.shopDiscountPercentage = global.archipelago.apclient_json_number_at(0, "shop_discount_percentage") / 100
     global.archipelago.minMp = global.archipelago.apclient_json_number_at(0, "min_mp")
+    global.archipelago.noInfiniteGrapple = global.archipelago.apclient_json_number_at(0, "no_infinite_grapple")
     global.archipelago.updatePlayers()
   }
   case "ap_items_received" {
