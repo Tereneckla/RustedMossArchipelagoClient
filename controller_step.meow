@@ -136,7 +136,14 @@ if (game != noone) {
         global.archipelago.apclient_death_link("")
         global.archipelago.lastDeathLink = global.archipelago.apclient_get_server_time()
       }
+      global.archipelago.died = true
       global.archipelago.menuDeath = false
+    }
+  -- just after respawn
+  } else if (global.archipelago.died and game.dead_timer == -10) {
+    global.archipelago.died = false
+    if (!array_contains(global.archipelago.save.receivedItems, "Rail")) {
+      global.weapon_data[0].found = 0
     }
   -- ending A gamestate
   } else if (global.gamestate == 32 and !global.archipelago.endingProcessed) {
@@ -434,7 +441,7 @@ if (player != noone) {
       ds_map_set(global.save_data, "flags_found", 0)
       let i = 1
       while i < 6 {
-        global.weapon_data[5].found = 0
+        global.weapon_data[i].found = 0
         i += 1
       }
       let trinkets = global.trinket_data_
@@ -537,6 +544,11 @@ if (player != noone) {
       global.archipelago.save.nextItemToProcess += 1
     }
     global.archipelago.processItems = false
+    let hp = global.hp
+    let mp = global.mp
+    save_game()
+    global.hp = hp
+    global.mp = mp
   }
 }
 
