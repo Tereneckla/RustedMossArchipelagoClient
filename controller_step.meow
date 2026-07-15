@@ -115,6 +115,7 @@ if (game != noone) {
   if (global.archipelago.menuState == 5) {
     global.archipelago.processItems = true
     global.archipelago.menuState = 0
+    global.archipelago.checkRail = true
   }
   -- pause gamestate for teleporting to start
   if (global.gamestate == 2) {
@@ -136,12 +137,12 @@ if (game != noone) {
         global.archipelago.apclient_death_link("")
         global.archipelago.lastDeathLink = global.archipelago.apclient_get_server_time()
       }
-      global.archipelago.died = true
+      global.archipelago.checkRail = true
       global.archipelago.menuDeath = false
     }
-  -- just after respawn
-  } else if (global.archipelago.died and game.dead_timer == -10) {
-    global.archipelago.died = false
+  -- just after load
+  } else if (global.archipelago.checkRail) {
+    global.archipelago.checkRail = false
     if (!array_contains(global.archipelago.save.receivedItems, "Rail")) {
       global.weapon_data[0].found = 0
     }
